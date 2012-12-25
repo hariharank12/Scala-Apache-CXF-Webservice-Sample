@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/sample/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="sample" targetNamespace="http://www.example.org/sample/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/sample/">
+      <xsd:element name="numberConcatenation">
+        <xsd:complexType>
+          <xsd:sequence>
+           <xsd:element name="i1" type="xsd:int" />
+           <xsd:element name="i2" type="xsd:int"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="numberConcatenationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="i" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="stringConcatenation">
+       <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="s1" type="xsd:string"></xsd:element>
+         <xsd:element name="s2" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+       </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="stringConcatenationResponse">
+       <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="s" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+       </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperation">
+       <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="in" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+       </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+       <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="out" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+       </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="numberConcatenationRequest">
+    <wsdl:part element="tns:numberConcatenation" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="numberConcatenationResponse">
+    <wsdl:part element="tns:numberConcatenationResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="stringConcatenationRequest">
+   <wsdl:part name="parameters" element="tns:stringConcatenation"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stringConcatenationResponse">
+   <wsdl:part name="parameters" element="tns:stringConcatenationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationRequest">
+   <wsdl:part name="parameters" element="tns:NewOperation"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+   <wsdl:part name="parameters" element="tns:NewOperationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Concatenation">
+    <wsdl:operation name="numberConcatenation">
+      <wsdl:input message="tns:numberConcatenationRequest"/>
+      <wsdl:output message="tns:numberConcatenationResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="stringConcatenation">
+     <wsdl:input message="tns:stringConcatenationRequest"></wsdl:input>
+     <wsdl:output message="tns:stringConcatenationResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="sampleSOAP" type="tns:Concatenation">
+   <soap:binding style="document"
+    transport="http://schemas.xmlsoap.org/soap/http" />
+   <wsdl:operation name="numberConcatenation">
+    <soap:operation
+     soapAction="http://www.example.org/sample/numberConcatenation" />
+    <wsdl:input>
+     <soap:body use="literal" />
+    </wsdl:input>
+    <wsdl:output>
+     <soap:body use="literal" />
+    </wsdl:output>
+   </wsdl:operation>
+   <wsdl:operation name="stringConcatenation">
+    <soap:operation
+     soapAction="http://www.example.org/sample/stringConcatenation" />
+    <wsdl:input>
+     <soap:body use="literal" />
+    </wsdl:input>
+    <wsdl:output>
+     <soap:body use="literal" />
+    </wsdl:output>
+   </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sample">
+    <wsdl:port binding="tns:sampleSOAP" name="sampleSOAP">
+      <soap:address location="http://localhost:8085/cxf/services/sample"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
